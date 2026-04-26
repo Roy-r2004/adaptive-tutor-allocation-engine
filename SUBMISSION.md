@@ -23,7 +23,7 @@ It is what I would build for V1 of an actual product, not a prototype. Two backi
 | Prompt documentation | `triage-pipeline/docs/prompts.md` + `prompts/*/prompt.meta.yaml` |
 | Architecture write-up | `triage-pipeline/docs/architecture.md` (+ ADRs in `docs/adr/`) |
 | Tests | 56 backend tests (`make test`) + 15 frontend tests (`npm run test:run`) — all green |
-| Screen recording | attached separately (see §8) |
+| Screen recording | Loom link in the email (walkthrough script in §8) |
 
 A reviewer with no API keys can still see the pipeline run end-to-end via `python scripts/run_samples.py --stub` — a deterministic heuristic mode that exercises every node, every edge, and the escalation path.
 
