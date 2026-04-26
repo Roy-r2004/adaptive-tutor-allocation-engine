@@ -10,4 +10,4 @@ This is the self-contained deliverables folder for the Apex AI Engineer assessme
 | `sample_run_results.json` | The exported structured JSON output (5 records) — the primary deliverable from the brief. |
 | `sample_run_summary.md` | Human-readable summary of the same 5 records. |
 
-**Demo recording (Loom):** `<paste Loom URL here before sending>`
+**Demo recording (Loom):** `<https://www.loom.com/share/191aff32adf34eed93f4f081a99689d7>`
