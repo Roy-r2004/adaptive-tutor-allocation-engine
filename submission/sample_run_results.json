@@ -1,0 +1,244 @@
+[
+  {
+    "sample_index": 1,
+    "input": {
+      "source": "chat",
+      "body": "Hi, I'm trying to book a math tutor for IGCSE but I can't see any available time slots after selecting the teacher."
+    },
+    "output": {
+      "ticket_id": "3c46b48a-6d6a-4614-9ad0-6b632158b9e8",
+      "message_id": "89df863e-8482-4844-b877-fe21e35bbfa2",
+      "source": "chat",
+      "received_at": "2026-04-26T10:37:27.309410+00:00",
+      "classification": {
+        "category": "bug_report",
+        "priority": "medium",
+        "confidence": 0.83,
+        "rationale": "Concrete broken booking flow ('can't see any available time slots after selecting the teacher')."
+      },
+      "enrichment": {
+        "issue_summary": "Hi, I'm trying to book a math tutor for IGCSE but I can't see any available time slots after selecting the teacher.",
+        "affected_ids": [],
+        "error_codes": [],
+        "invoice_amounts_usd": [],
+        "urgency_signals": [],
+        "detected_language": "en"
+      },
+      "routing": {
+        "queue": "engineering",
+        "sla_minutes": 60,
+        "rationale": "category=bug_report; priority=medium",
+        "decided_by": "auto",
+        "needs_human": false
+      },
+      "escalation": {
+        "needs_human": false,
+        "reasons": [],
+        "blocking": false,
+        "proposed_reviewer": null
+      },
+      "human_summary": "Bug Report reported via the platform with priority medium. Routed to engineering (SLA 60m). User wrote: \"Hi, I'm trying to book a math tutor for IGCSE but I can't see any available time slots after selecting the teacher.\"",
+      "handled_by": "auto",
+      "prompt_versions": {
+        "classification": "v1#623799d20375",
+        "enrichment": "v1#38176e4cc85a",
+        "summarization": "v1#632bbda2b97f"
+      },
+      "trace_id": null
+    }
+  },
+  {
+    "sample_index": 2,
+    "input": {
+      "source": "web_form",
+      "body": "It would be really helpful if we could compare tutors based on ratings, price, and availability in one view before booking."
+    },
+    "output": {
+      "ticket_id": "d97a33a2-30a6-4e66-b7ce-96fd8bcde6d3",
+      "message_id": "b4a9fdbf-f8dd-448a-ace0-37291837546f",
+      "source": "web_form",
+      "received_at": "2026-04-26T10:37:27.310750+00:00",
+      "classification": {
+        "category": "feature_request",
+        "priority": "low",
+        "confidence": 0.92,
+        "rationale": "Asks for new functionality ('compare tutors based on ratings, price, and availability'); no breakage reported."
+      },
+      "enrichment": {
+        "issue_summary": "It would be really helpful if we could compare tutors based on ratings, price, and availability in one view before booking.",
+        "affected_ids": [],
+        "error_codes": [],
+        "invoice_amounts_usd": [],
+        "urgency_signals": [],
+        "detected_language": "en"
+      },
+      "routing": {
+        "queue": "product",
+        "sla_minutes": 240,
+        "rationale": "category=feature_request; priority=low",
+        "decided_by": "auto",
+        "needs_human": false
+      },
+      "escalation": {
+        "needs_human": false,
+        "reasons": [],
+        "blocking": false,
+        "proposed_reviewer": null
+      },
+      "human_summary": "Feature Request reported via the platform with priority low. Routed to product (SLA 240m). User wrote: \"It would be really helpful if we could compare tutors based on ratings, price, and availability in one view before booking.\"",
+      "handled_by": "auto",
+      "prompt_versions": {
+        "classification": "v1#623799d20375",
+        "enrichment": "v1#38176e4cc85a",
+        "summarization": "v1#632bbda2b97f"
+      },
+      "trace_id": null
+    }
+  },
+  {
+    "sample_index": 3,
+    "input": {
+      "source": "chat",
+      "body": "I booked a session yesterday but I didn't receive any confirmation email or session details. Can you check if my booking went through?"
+    },
+    "output": {
+      "ticket_id": "48021189-bafd-450e-b1c0-af653758b70d",
+      "message_id": "92bedc05-09be-40bb-ae51-34300bc44357",
+      "source": "chat",
+      "received_at": "2026-04-26T10:37:27.312968+00:00",
+      "classification": {
+        "category": "bug_report",
+        "priority": "medium",
+        "confidence": 0.86,
+        "rationale": "Reports a broken side effect ('didn't receive any confirmation email') after a successful action."
+      },
+      "enrichment": {
+        "issue_summary": "I booked a session yesterday but I didn't receive any confirmation email or session details.",
+        "affected_ids": [],
+        "error_codes": [],
+        "invoice_amounts_usd": [],
+        "urgency_signals": [],
+        "detected_language": "en"
+      },
+      "routing": {
+        "queue": "engineering",
+        "sla_minutes": 60,
+        "rationale": "category=bug_report; priority=medium",
+        "decided_by": "auto",
+        "needs_human": false
+      },
+      "escalation": {
+        "needs_human": false,
+        "reasons": [],
+        "blocking": false,
+        "proposed_reviewer": null
+      },
+      "human_summary": "Bug Report reported via the platform with priority medium. Routed to engineering (SLA 60m). User wrote: \"I booked a session yesterday but I didn't receive any confirmation email or session details. Can you check if my booking went through?\"",
+      "handled_by": "auto",
+      "prompt_versions": {
+        "classification": "v1#623799d20375",
+        "enrichment": "v1#38176e4cc85a",
+        "summarization": "v1#632bbda2b97f"
+      },
+      "trace_id": null
+    }
+  },
+  {
+    "sample_index": 4,
+    "input": {
+      "source": "chat",
+      "body": "Is there a way to get help choosing the right major or university based on my interests?"
+    },
+    "output": {
+      "ticket_id": "69aa1145-f1e5-432a-ba16-66defa5dd0ef",
+      "message_id": "9b9ca7fe-a7f0-49a6-a2cc-34e26262672c",
+      "source": "chat",
+      "received_at": "2026-04-26T10:37:27.313701+00:00",
+      "classification": {
+        "category": "technical_question",
+        "priority": "low",
+        "confidence": 0.81,
+        "rationale": "General how-to question about platform guidance ('help choosing the right major or university')."
+      },
+      "enrichment": {
+        "issue_summary": "Is there a way to get help choosing the right major or university based on my interests?.",
+        "affected_ids": [],
+        "error_codes": [],
+        "invoice_amounts_usd": [],
+        "urgency_signals": [],
+        "detected_language": "en"
+      },
+      "routing": {
+        "queue": "product",
+        "sla_minutes": 240,
+        "rationale": "category=technical_question; priority=low",
+        "decided_by": "auto",
+        "needs_human": false
+      },
+      "escalation": {
+        "needs_human": false,
+        "reasons": [],
+        "blocking": false,
+        "proposed_reviewer": null
+      },
+      "human_summary": "Technical Question reported via the platform with priority low. Routed to product (SLA 240m). User wrote: \"Is there a way to get help choosing the right major or university based on my interests?\"",
+      "handled_by": "auto",
+      "prompt_versions": {
+        "classification": "v1#623799d20375",
+        "enrichment": "v1#38176e4cc85a",
+        "summarization": "v1#632bbda2b97f"
+      },
+      "trace_id": null
+    }
+  },
+  {
+    "sample_index": 5,
+    "input": {
+      "source": "web_form",
+      "body": "The platform is not loading properly and none of the tutors are showing up. Multiple users are facing the same issue."
+    },
+    "output": {
+      "ticket_id": "cfbc4282-a7c3-45cf-b90f-d4e03cad64a5",
+      "message_id": "79aeafdd-a44a-4a41-a4eb-4d970d4be526",
+      "source": "web_form",
+      "received_at": "2026-04-26T10:37:27.314435+00:00",
+      "classification": {
+        "category": "incident_outage",
+        "priority": "high",
+        "confidence": 0.94,
+        "rationale": "Mentions multi-user impact ('Multiple users are facing the same issue') and platform unavailability ('not loading properly')."
+      },
+      "enrichment": {
+        "issue_summary": "The platform is not loading properly and none of the tutors are showing up.",
+        "affected_ids": [],
+        "error_codes": [],
+        "invoice_amounts_usd": [],
+        "urgency_signals": [],
+        "detected_language": "en"
+      },
+      "routing": {
+        "queue": "it_security",
+        "sla_minutes": 15,
+        "rationale": "category=incident_outage; priority=high",
+        "decided_by": "auto",
+        "needs_human": true
+      },
+      "escalation": {
+        "needs_human": true,
+        "reasons": [
+          "category_incident_outage"
+        ],
+        "blocking": true,
+        "proposed_reviewer": null
+      },
+      "human_summary": "Incident Outage reported via the platform with priority high. Routed to it_security (SLA 15m). User wrote: \"The platform is not loading properly and none of the tutors are showing up. Multiple users are facing the same issue.\"",
+      "handled_by": "auto",
+      "prompt_versions": {
+        "classification": "v1#623799d20375",
+        "enrichment": "v1#38176e4cc85a",
+        "summarization": "v1#632bbda2b97f"
+      },
+      "trace_id": null
+    }
+  }
+]

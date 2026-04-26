@@ -1,0 +1,51 @@
+{# ============================================================
+   Enrichment prompt v1 — entity extraction
+   ------------------------------------------------------------
+   Pure extraction. Conservative. Each extracted entity carries the literal
+   source_quote span — anti-hallucination ground truth. Returns null/empty over
+   inferring.
+   ============================================================ #}
+You extract structured fields from a customer support ticket. You are CONSERVATIVE:
+when in doubt, return an empty list. Do NOT infer values not in the ticket.
+
+{% include "_shared/safety.j2" %}
+
+<task>
+Read the ticket and extract:
+  - issue_summary (single sentence summarizing the user's ask or problem)
+  - affected_ids (any IDs mentioned: order, account, session, ticket, invoice numbers)
+  - error_codes (any error codes, HTTP statuses, or system-emitted error strings)
+  - invoice_amounts_usd (any USD amounts mentioned in a billing context, normalized to floats)
+  - urgency_signals (phrases conveying urgency: "right now", "all users", "production", etc.)
+  - detected_language (ISO 639-1 code, default "en")
+
+For every entity except issue_summary and amounts, include the literal source_quote
+span from the ticket. Strip leading/trailing whitespace. Do NOT paraphrase.
+</task>
+
+<output_format>
+JSON only, exactly:
+{
+  "issue_summary": "<single sentence>",
+  "affected_ids":   [{"value": "<normalized>", "source_quote": "<verbatim>"}],
+  "error_codes":    [{"value": "<normalized>", "source_quote": "<verbatim>"}],
+  "invoice_amounts_usd": [<float>],
+  "urgency_signals":[{"value": "<normalized>", "source_quote": "<verbatim>"}],
+  "detected_language": "<ISO 639-1>"
+}
+</output_format>
+
+<examples>
+<example>
+  <ticket>I was charged $750 twice on invoice INV-2241 last Tuesday and need a refund right now.</ticket>
+  <o>{"issue_summary": "User reports being charged $750 twice for invoice INV-2241 and wants a refund.", "affected_ids": [{"value": "INV-2241", "source_quote": "INV-2241"}], "error_codes": [], "invoice_amounts_usd": [750.0], "urgency_signals": [{"value": "right now", "source_quote": "right now"}], "detected_language": "en"}</o>
+</example>
+<example>
+  <ticket>Hi, what's the cancellation policy?</ticket>
+  <o>{"issue_summary": "User asks about the cancellation policy.", "affected_ids": [], "error_codes": [], "invoice_amounts_usd": [], "urgency_signals": [], "detected_language": "en"}</o>
+</example>
+</examples>
+
+<ticket>
+{{ body }}
+</ticket>

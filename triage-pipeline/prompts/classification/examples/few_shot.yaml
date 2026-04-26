@@ -1,0 +1,43 @@
+examples:
+  - source: chat
+    body: "The pricing page is showing wrong prices for IGCSE tutors — it says $45 but checkout charges $60."
+    output:
+      category: bug_report
+      priority: medium
+      confidence: 0.88
+      rationale: "Mentions a concrete defect in shipped behavior ('pricing page is showing wrong prices' vs charged $60), affecting a single user with a clear blocker."
+  - source: web_form
+    body: "It would be great to have a dark mode option for the dashboard, especially for late-night study sessions."
+    output:
+      category: feature_request
+      priority: low
+      confidence: 0.95
+      rationale: "Explicitly asks for new functionality ('would be great to have a dark mode') with no current breakage; nice-to-have."
+  - source: chat
+    body: "I was charged $750 twice on my card for the same booking last Tuesday. Invoice INV-2241."
+    output:
+      category: billing_issue
+      priority: high
+      confidence: 0.92
+      rationale: "Concrete billing dispute: 'charged $750 twice' for one booking, with invoice ID. Amount and duplication elevate priority."
+  - source: chat
+    body: "How do I change the time zone for my booked sessions?"
+    output:
+      category: technical_question
+      priority: low
+      confidence: 0.93
+      rationale: "Pure how-to question ('how do I change the time zone') answerable from docs."
+  - source: web_form
+    body: "Production is down — none of our tutors can log in and the platform is not loading for anyone in our school."
+    output:
+      category: incident_outage
+      priority: high
+      confidence: 0.97
+      rationale: "Outage keywords ('Production is down', 'not loading for anyone') with multi-user impact ('our school')."
+  - source: chat
+    body: "Hi, I'm trying to book a math tutor for IGCSE but I can't see any available time slots after selecting the teacher."
+    output:
+      category: bug_report
+      priority: medium
+      confidence: 0.82
+      rationale: "Concrete broken flow ('can't see any available time slots after selecting the teacher') blocking a single booking."

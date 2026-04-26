@@ -1,0 +1,46 @@
+name: apex-triage
+
+# ---------------------------------------------------------------------------
+# Top-level Compose stack — orchestrates the backend + frontend together.
+#
+#   docker compose up -d --build
+#     starts: postgres, redis, migrate (one-shot), app, worker, frontend
+#
+#   The backend services come from triage-pipeline/docker-compose.yml via
+#   include — there's no duplication. We only add the `frontend` service here.
+#
+#   Backend-only:    cd triage-pipeline && docker compose up
+#   Full stack:      docker compose up   (from this directory)
+# ---------------------------------------------------------------------------
+
+include:
+  - path: triage-pipeline/docker-compose.yml
+
+services:
+  frontend:
+    build:
+      context: ./triage-frontend
+      dockerfile: Dockerfile.dev
+    environment:
+      # Browser reaches the backend via the host port mapping. Tracks API_PORT.
+      VITE_API_BASE_URL: http://localhost:${API_PORT:-8000}
+      VITE_ENV: dev
+      # No API key — backend's INTERNAL_API_KEYS is empty by default (dev mode).
+      VITE_API_KEY: ""
+    ports:
+      # Override via FRONTEND_PORT in .env if 5173 is already in use locally.
+      - "${FRONTEND_PORT:-5173}:5173"
+    volumes:
+      - ./triage-frontend/src:/app/src
+      - ./triage-frontend/index.html:/app/index.html
+      - ./triage-frontend/public:/app/public
+      - ./triage-frontend/tailwind.config.ts:/app/tailwind.config.ts
+      - ./triage-frontend/postcss.config.js:/app/postcss.config.js
+      - ./triage-frontend/vite.config.ts:/app/vite.config.ts
+      - ./triage-frontend/tsconfig.json:/app/tsconfig.json
+      - ./triage-frontend/tsconfig.app.json:/app/tsconfig.app.json
+      - ./triage-frontend/tsconfig.node.json:/app/tsconfig.node.json
+    depends_on:
+      app:
+        condition: service_started
+    restart: unless-stopped

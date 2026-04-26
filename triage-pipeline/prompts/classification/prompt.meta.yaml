@@ -1,0 +1,9 @@
+name: classification
+version: v1
+owner: roy.rizkallah
+template: ticket_classify_v1.j2
+model_hint: triage-fast
+expected_inputs: [body, source]
+notes: |
+  No chain-of-thought. Few-shot driven. XML sectioning for cross-provider parity.
+  Rationale comes after the label and must cite the ticket.

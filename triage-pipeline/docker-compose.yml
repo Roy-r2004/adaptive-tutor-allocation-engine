@@ -1,0 +1,130 @@
+name: ai-triage
+
+x-app-env: &app-env
+  ENV: dev
+  LOG_FORMAT: console
+  LOG_LEVEL: INFO
+  DATABASE_URL: postgresql+asyncpg://app:app@postgres:5432/app
+  REDIS_URL: redis://redis:6379/0
+  GROQ_API_KEY: ${GROQ_API_KEY:-}
+  GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+  OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+  OLLAMA_BASE_URL: http://ollama:11434
+  LLM_PRIMARY_MODEL: ${LLM_PRIMARY_MODEL:-groq/llama-3.3-70b-versatile}
+  LLM_FALLBACK_MODELS: ${LLM_FALLBACK_MODELS:-gemini/gemini-2.0-flash,openai/gpt-4o-mini,ollama/llama3.1}
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: app
+      POSTGRES_DB: app
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      # Override via POSTGRES_PORT in .env if 5432 is already in use locally.
+      - "${POSTGRES_PORT:-5432}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U app -d app"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redisdata:/data
+    ports:
+      # Override via REDIS_PORT in .env if 6379 is already in use locally.
+      - "${REDIS_PORT:-6379}:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  migrate:
+    build:
+      context: .
+      target: runtime
+    command: ["alembic", "upgrade", "head"]
+    environment: *app-env
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: "no"
+
+  app:
+    build:
+      context: .
+      target: runtime
+    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+    environment: *app-env
+    volumes:
+      - ./src:/app/src
+      - ./prompts:/app/prompts
+      - ./scripts:/app/scripts
+    ports:
+      # Override via API_PORT in .env if 8000 is already in use locally.
+      - "${API_PORT:-8000}:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+
+  worker:
+    build:
+      context: .
+      target: runtime
+    command: ["arq", "app.workers.queue.WorkerSettings"]
+    environment: *app-env
+    volumes:
+      - ./src:/app/src
+      - ./prompts:/app/prompts
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./configs/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - "9090:9090"
+    profiles: ["observability"]
+
+  grafana:
+    image: grafana/grafana:latest
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: admin
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Admin
+    volumes:
+      - grafana:/var/lib/grafana
+      - ./configs/grafana/provisioning:/etc/grafana/provisioning:ro
+    ports:
+      - "3001:3000"
+    profiles: ["observability"]
+
+  ollama:
+    image: ollama/ollama:latest
+    volumes:
+      - ollama:/root/.ollama
+    ports:
+      - "11434:11434"
+    profiles: ["local-llm"]
+
+volumes:
+  pgdata: {}
+  redisdata: {}
+  grafana: {}
+  ollama: {}

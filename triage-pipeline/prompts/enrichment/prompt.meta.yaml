@@ -1,0 +1,9 @@
+name: enrichment
+version: v1
+owner: roy.rizkallah
+template: extract_v1.j2
+model_hint: triage-fast
+expected_inputs: [body]
+notes: |
+  Pure extraction. Source-quote pattern for every entity — literal span from ticket,
+  no paraphrasing. Conservative: empty list beats invented value.

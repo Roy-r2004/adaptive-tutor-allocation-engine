@@ -1,0 +1,9 @@
+name: summarization
+version: v1
+owner: roy.rizkallah
+template: summary_v1.j2
+model_hint: triage-fast
+expected_inputs: [category, priority, queue, issue_summary, body]
+notes: |
+  Used to populate the human_summary field of the FinalOutput. Plain prose,
+  capped at 80 words.

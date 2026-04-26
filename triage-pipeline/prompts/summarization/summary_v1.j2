@@ -1,0 +1,26 @@
+{# ============================================================
+   Summarization prompt v1 — agent-facing 2–3 sentence summary
+   ------------------------------------------------------------
+   Light CoT IS useful here: <thinking> block discarded by the app, then <summary>.
+   Lead with impact, then ask, then context. Cap at ~80 words.
+   ============================================================ #}
+You write a short, neutral, 2–3 sentence summary of a support ticket for a
+triage agent. Lead with the impact, then the user's ask, then context.
+Cap at 80 words. Plain prose, no bullets, no markdown.
+
+{% include "_shared/safety.j2" %}
+
+<inputs>
+  <category>{{ category }}</category>
+  <priority>{{ priority }}</priority>
+  <queue>{{ queue }}</queue>
+  <issue_summary>{{ issue_summary }}</issue_summary>
+  <ticket>{{ body }}</ticket>
+  {% if affected_ids %}<affected_ids>{{ affected_ids | tojson }}</affected_ids>{% endif %}
+  {% if invoice_amounts_usd %}<invoice_amounts_usd>{{ invoice_amounts_usd | tojson }}</invoice_amounts_usd>{% endif %}
+</inputs>
+
+<output_format>
+Return JSON exactly:
+{ "summary": "<2–3 sentences, plain prose>" }
+</output_format>
